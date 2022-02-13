@@ -72,7 +72,7 @@ function checkNumbers(numbersPicked, myNumbers) {
 }
 
 function init() {
-    for (let w = 1; w < 1000001; w++) {
+    for (let w = 1; w < 1001; w++) {
         // resultsArea.textContent = w;
         numbersMatching = 0;
         numbersPicked = [];
