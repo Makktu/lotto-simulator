@@ -14,6 +14,8 @@ let numbersMatching = 0; // this variable keeps track of how many 'myNumbers' ma
 let numbersPicked = []; // empty array to be filled with a simulated draw of 7 numbers (6x main numbers plus bonus ball)
 let myNumbers = [10, 12, 16, 18, 22, 45]; // the starting myNumbers; the user will be able to change these
 
+console.log(myNumbers);
+
 function getRandom(n) {
     // returns single instance of random number between 0 and n
     randomNumber = Math.random() * n + 1;
@@ -72,7 +74,7 @@ function checkNumbers(numbersPicked, myNumbers) {
 }
 
 function init() {
-    for (let w = 1; w < 1001; w++) {
+    for (let w = 1; w < 100000000; w++) {
         // resultsArea.textContent = w;
         numbersMatching = 0;
         numbersPicked = [];
@@ -80,7 +82,7 @@ function init() {
         numbersUp = [];
         lottoDraw();
         checkNumbers(numbersPicked, myNumbers);
-        if (numbersUp.length > 4 || (numbersUp.length > 5 && bonusMatched)) {
+        if (numbersUp.length == 6 || (numbersUp.length > 4 && bonusMatched)) {
             alertUser(w, numbersMatching, numbersUp);
         }
     }
@@ -89,7 +91,7 @@ function init() {
 
 function alertUser(w, numbersMatching, myNumbers) {
     console.log(
-        `On attempt ${w} you matched ${numbersMatching} ${
+        `On attempt ${w} with ${myNumbers} selected you matched ${numbersMatching} ${
             numbersMatching !== 1 ? "numbers" : "number"
         } in this draw. ${
             numbersUp.length > 0 ? "You matched " + numbersUp : ""
