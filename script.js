@@ -1,5 +1,7 @@
 "use strict";
 
+const drawsArea = document.querySelector(".draws");
+
 const resultsArea = document.querySelector(".results");
 const newNumbersBtn = document.querySelector(".newBtn");
 newNumbersBtn.addEventListener("click", () => {
@@ -9,6 +11,13 @@ const startBtn = document.querySelector(".startBtn");
 startBtn.addEventListener("click", () => {
     alert("start the draws!");
     init();
+});
+
+const customBtn = document.querySelector(".customBtn");
+customBtn.addEventListener("click", () => {
+    numberOfDraws = prompt(
+        `Number of draws is currently set to ${numberOfDraws}. Enter a new number of draws`
+    );
 });
 const yourNumbersArea = document.querySelector(".your-numbers");
 
@@ -21,8 +30,6 @@ let numbersMatching = 0; // this variable keeps track of how many 'myNumbers' ma
 let numbersPicked = []; // empty array to be filled with a simulated draw of 7 numbers (6x main numbers plus bonus ball)
 let myNumbers = [10, 12, 16, 18, 22, 45]; // the starting myNumbers; the user will be able to change these
 let numberOfDraws = 8000;
-
-console.log(myNumbers);
 
 function getRandom(n) {
     // returns single instance of random number between 0 and n
@@ -80,8 +87,8 @@ function checkNumbers(numbersPicked, myNumbers) {
 
 function init() {
     yourNumbersArea.innerHTML = `Your numbers:<br> ${myNumbers}`;
-    resultsArea.innerHTML += `${numberOfDraws} Lotto draws.<br><br>`;
-    for (let w = 1; w < 800; w++) {
+    resultsArea.innerHTML = `Current setting is for ${numberOfDraws} Lotto draws. Click "Enter amount of draws" to change.<br><br>`;
+    for (let w = 1; w < numberOfDraws; w++) {
         // resultsArea.textContent = w;
         numbersMatching = 0;
         numbersPicked = [];
@@ -89,7 +96,7 @@ function init() {
         numbersUp = [];
         lottoDraw();
         checkNumbers(numbersPicked, myNumbers);
-        if (numbersUp.length > 3 || (numbersUp.length == 5 && bonusMatched)) {
+        if (numbersUp.length > 4 || (numbersUp.length == 5 && bonusMatched)) {
             alertUser(w, numbersMatching, numbersUp);
         }
     }

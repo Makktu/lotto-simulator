@@ -33,19 +33,23 @@ body {
 
 .your-numbers {
     margin-top: 10px;
-    border: green 1px solid;
     height: 60px;
     width: 400px;
     font-size: 1.5rem;
     text-align: center;
+    color: aqua;
 }
 
 .newBtn {
     margin: 10px;
 }
 
+.customBtn {
+    margin-bottom: 10px;
+}
+
 .results {
     width: 600px;
     height: 500px;
-    border: red 1px solid;
+    margin-top: 15px;
 }
