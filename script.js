@@ -1,10 +1,17 @@
 "use strict";
 
 const resultsArea = document.querySelector(".results");
+const newNumbersBtn = document.querySelector(".newBtn");
+newNumbersBtn.addEventListener("click", () => {
+    getNewNumbers();
+});
+const startBtn = document.querySelector(".startBtn");
+startBtn.addEventListener("click", () => {
+    alert("start the draws!");
+    init();
+});
+const yourNumbersArea = document.querySelector(".your-numbers");
 
-let fifties = 0;
-let ones = 0;
-let twentyFours = 0;
 let randomNumber;
 let numbersUp = [];
 let alreadyPicked = false;
@@ -13,6 +20,7 @@ let bonusMatched = false;
 let numbersMatching = 0; // this variable keeps track of how many 'myNumbers' match the simulated lotto draw numbers
 let numbersPicked = []; // empty array to be filled with a simulated draw of 7 numbers (6x main numbers plus bonus ball)
 let myNumbers = [10, 12, 16, 18, 22, 45]; // the starting myNumbers; the user will be able to change these
+let numberOfDraws = 8000;
 
 console.log(myNumbers);
 
@@ -20,9 +28,6 @@ function getRandom(n) {
     // returns single instance of random number between 0 and n
     randomNumber = Math.random() * n + 1;
     randomNumber = Math.floor(randomNumber);
-    if (randomNumber == 50) fifties++;
-    if (randomNumber == 1) ones++;
-    if (randomNumber == 24) twentyFours++;
     return randomNumber;
 }
 
@@ -74,7 +79,9 @@ function checkNumbers(numbersPicked, myNumbers) {
 }
 
 function init() {
-    for (let w = 1; w < 100000000; w++) {
+    yourNumbersArea.innerHTML = `Your numbers:<br> ${myNumbers}`;
+    resultsArea.innerHTML += `${numberOfDraws} Lotto draws.<br><br>`;
+    for (let w = 1; w < 800; w++) {
         // resultsArea.textContent = w;
         numbersMatching = 0;
         numbersPicked = [];
@@ -82,29 +89,49 @@ function init() {
         numbersUp = [];
         lottoDraw();
         checkNumbers(numbersPicked, myNumbers);
-        if (numbersUp.length == 6 || (numbersUp.length > 4 && bonusMatched)) {
+        if (numbersUp.length > 3 || (numbersUp.length == 5 && bonusMatched)) {
             alertUser(w, numbersMatching, numbersUp);
         }
     }
-    console.log(ones, twentyFours, fifties);
 }
 
 function alertUser(w, numbersMatching, myNumbers) {
-    console.log(
-        `On attempt ${w} with ${myNumbers} selected you matched ${numbersMatching} ${
-            numbersMatching !== 1 ? "numbers" : "number"
-        } in this draw. ${
-            numbersUp.length > 0 ? "You matched " + numbersUp : ""
-        }. ${
-            bonusMatched
-                ? "You matched the Bonus Ball which was " + bonusBall + "."
-                : ""
-        }`
+    resultsArea.innerHTML += `Draw #${w}: you matched ${numbersMatching} ${
+        numbersMatching !== 1 ? "numbers" : "number"
+    } in this draw. ${numbersUp.length > 0 ? numbersUp : ""}. ${
+        bonusMatched && numbersUp.length == 5
+            ? "And the Bonus Ball:" + bonusBall + "."
+            : ""
+    }<br>`;
+
+    if (bonusMatched) bonusMatched = false;
+}
+
+function getNewNumbers() {
+    alert(
+        "You will be asked for 6 numbers, one after the other. Enter them ONE at a time. Press OK to start."
     );
+    let thisNum;
+    let changedNums = [];
+    for (let d = 0; d < 6; d++) {
+        thisNum = prompt(`Enter number ${d + 1}`);
+        if (thisNum < 1 || thisNum > 50) {
+            alert(
+                "Illegal entry. Numbers must be between 1 and 50 inclusive. Your numbers have not been changed."
+            );
+            return;
+        }
+        changedNums.push(thisNum);
+    }
+    sortNumbers(changedNums);
+    let confirm = prompt(
+        `Your numbers have not yet been changed. Press OK to confirm that you wish to change them to ${changedNums}; CANCEL will cancel this change`
+    );
+    if (confirm == "y" || confirm == "Y") {
+        myNumbers = changedNums;
+        alert(`Your numbers have been changed to ${myNumbers}`);
+        return;
+    }
 }
 
 init();
-
-// 1) check that 'myNumbers' exists.
-// 2) make a Lotto draw; sort into numerical order.
-// 3) check myNumbers against Lotto draw - counting matches (numerical) – and creating display; sort into numerical order.
