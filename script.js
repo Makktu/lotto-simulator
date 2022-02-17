@@ -141,4 +141,9 @@ function getNewNumbers() {
     }
 }
 
+// console.log(
+//     "%cHello World",
+//     "font-weight: bold; font-size: 2rem; color: blue;"
+// );
+
 init();
