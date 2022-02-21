@@ -1,4 +1,4 @@
-"use strict";
+import { sortNumbers } from "./sortNumbers.js";
 
 const drawsArea = document.querySelector(".draws");
 
@@ -36,14 +36,6 @@ function getRandom(n) {
     randomNumber = Math.random() * n + 1;
     randomNumber = Math.floor(randomNumber);
     return randomNumber;
-}
-
-function sortNumbers(arr) {
-    // sorts an array of numbers into ascending numerical order
-    arr.sort(function (a, b) {
-        return a - b;
-    });
-    return arr;
 }
 
 function lottoDraw() {
