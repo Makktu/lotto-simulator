@@ -1,6 +1,6 @@
-import { sortNumbers } from "./sortNumbers";
+import { sortNumbers } from "./sortNumbers.js";
 
-export function getNewNumbers() {
+export function getNewNumbers(myNumbers) {
     alert(
         "You will be asked for 6 numbers, one after the other. Enter them ONE at a time. Press OK to start."
     );
@@ -21,8 +21,8 @@ export function getNewNumbers() {
         `Your numbers have not yet been changed. Press OK to confirm that you wish to change them to ${changedNums}; CANCEL will cancel this change`
     );
     if (confirm == "y" || confirm == "Y") {
+        alert(`Your numbers have been changed to ${changedNums}`);
         myNumbers = changedNums;
-        alert(`Your numbers have been changed to ${myNumbers}`);
-        return;
+        return myNumbers;
     }
 }
